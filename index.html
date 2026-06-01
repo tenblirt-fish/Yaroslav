@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description"
+        content="Интерактивный сайт-портфолио Ярослава (3.5 года). Поезда, игры, путешествия и любовь к родителям в аниме-стиле.">
+    <title>Yaroslav // Cybernetic Portfolio 3.5</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&family=Outfit:wght@800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Core Styles -->
+    <link rel="stylesheet" href="index.css">
+
+    <style>
+        /* CSS Anime Filter fallback for photos */
+        .anime-css-filter {
+            filter: saturate(2.5) contrast(1.4) brightness(1.05) hue-rotate(-10deg);
+        }
+
+        .bento-item.css-filter-mode:hover .base-img {
+            filter: saturate(4.5) contrast(2.2) brightness(1.08) hue-rotate(-6deg);
+            transform: scale(1.02);
+        }
+        .bento-item.css-filter-mode .card-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            background:
+                radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.18), transparent 28%),
+                linear-gradient(135deg, rgba(255, 0, 127, 0.08), rgba(0, 255, 213, 0.06));
+            mix-blend-mode: screen;
+            transition: opacity 0.6s var(--transition-fluid);
+            z-index: 4;
+        }
+        .bento-item.css-filter-mode:hover .card-visual::after {
+            opacity: 1;
+        }
+
+        /* Video fit fix */
+        .cyber-video {
+            object-position: center 15% !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Glowing Vector Spheres -->
+    <div class="glow-sphere glow-1"></div>
+    <div class="glow-sphere glow-2"></div>
+    <div class="glow-sphere glow-3"></div>
+
+    <!-- Scanline Overlay -->
+    <div class="scanlines"></div>
+
+    <!-- Custom Cursor -->
+    <div id="cyber-cursor" class="cyber-cursor">
+        <div class="cursor-dot"></div>
+        <svg class="cursor-ring" viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="18" fill="none" stroke="var(--accent-glow)" stroke-width="1.5"></circle>
+        </svg>
+        <span class="cursor-label">EXPLORE</span>
+    </div>
+
+    <!-- Sound Control Dock -->
+    <div class="hud-sound-dock">
+        <button id="btn-ambient-audio" class="hud-btn" aria-label="Train ambience">
+            <svg class="hud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18V5l12-2v13"></path>
+                <circle cx="6" cy="18" r="3"></circle>
+                <circle cx="18" cy="16" r="3"></circle>
+            </svg>
+            <span class="sound-wave-bars">
+                <span></span><span></span><span></span><span></span>
+            </span>
+        </button>
+        <button id="btn-audio-mute" class="hud-btn" aria-label="Mute UI sounds">
+            <svg class="hud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Floating Navigation HUD -->
+    <nav class="navigation-hud">
+        <div class="nav-blur-container">
+            <div class="nav-logo">
+                <span class="logo-accent">Y</span>AROSLAV<span class="logo-version">v3.5</span>
+            </div>
+            <div class="nav-links">
+                <a href="#hero" class="nav-link active">Инфо</a>
+                <a href="#bento" class="nav-link">Галерея</a>
+                <a href="#trains" class="nav-link">Поезда</a>
+                <a href="#travel" class="nav-link">Экспедиции</a>
+                <a href="#media-deck" class="nav-link">Архив</a>
+                <a href="#nexus" class="nav-link">Семья</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Scroll Progress Bar -->
+    <div class="progress-bar-container">
+        <div class="progress-indicator" id="progress-indicator"></div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <header id="hero" class="hero-section">
+        <div class="container hero-container">
+            <div class="hero-left">
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text font-mono">SYSTEM: ACTIVE // STAGE 3.5 YEARS</span>
+                </div>
+                <h1 class="hero-title font-display">
+                    ЯРОСЛАВ<br>
+                    <span class="accent-text gradient-wave">// ПРОТОКОЛ</span><br>
+                    <span class="accent-text glow-red">3.5</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Ему всего 3.5 года, но его жизнь — это яркое и невероятное приключение. Он обожает исследовать мир,
+                    управлять воображаемыми скоростными поездами, устраивать грандиозные игры и дарить бесконечную
+                    радость своим любимым родителям.
+                </p>
+                <div class="hero-actions">
+                    <!-- JS smooth scroll handles clicks via data-target -->
+                    <button class="action-btn primary-btn scroll-btn" data-target="bento">
+                        <span class="btn-text">ЗАПУСТИТЬ ARCHIVE</span>
+                        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                    <button class="action-btn secondary-btn scroll-btn" data-target="trains">
+                        <span class="btn-text">ДЕПО ПОЕЗДОВ</span>
+                    </button>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-visual-center">
+                    <!-- SVG Steam Locomotive -->
+                    <svg class="hero-loco-svg" viewBox="0 0 360 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="hl-metal" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#1e2235"/>
+                                <stop offset="60%" stop-color="#11131e"/>
+                                <stop offset="100%" stop-color="#07080f"/>
+                            </linearGradient>
+                            <linearGradient id="hl-cab-grad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#1c1e30"/>
+                                <stop offset="100%" stop-color="#090b16"/>
+                            </linearGradient>
+                            <linearGradient id="hl-cyan" x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0%" stop-color="#00ffe0"/>
+                                <stop offset="100%" stop-color="#0088ff"/>
+                            </linearGradient>
+                            <filter id="hl-glow" x="-25%" y="-25%" width="150%" height="150%">
+                                <feGaussianBlur stdDeviation="3.5" result="blur"/>
+                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                            </filter>
+                            <filter id="hl-glow-soft" x="-15%" y="-15%" width="130%" height="130%">
+                                <feGaussianBlur stdDeviation="1.8" result="blur"/>
+                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                            </filter>
+                            <filter id="hl-headlight-glow" x="-80%" y="-80%" width="260%" height="260%">
+                                <feGaussianBlur stdDeviation="6" result="blur"/>
+                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                            </filter>
+                        </defs>
+
+                        <!-- STEAM CLOUDS -->
+                        <circle cx="97" cy="60" r="12" fill="white" opacity="0.15" class="hl-puff hl-puff1"/>
+                        <circle cx="80" cy="42" r="19" fill="white" opacity="0.09" class="hl-puff hl-puff2"/>
+                        <circle cx="58" cy="24" r="26" fill="white" opacity="0.05" class="hl-puff hl-puff3"/>
+                        <circle cx="97" cy="66" r="7" fill="white" opacity="0.1" class="hl-puff hl-puff4"/>
+
+                        <!-- TRACK -->
+                        <line x1="8" y1="238" x2="352" y2="238" stroke="#0a0c14" stroke-width="8"/>
+                        <line x1="8" y1="238" x2="352" y2="238" stroke="url(#hl-cyan)" stroke-width="2.5" filter="url(#hl-glow)"/>
+                        <!-- Sleepers -->
+                        <line x1="28" y1="238" x2="28" y2="252" stroke="#1a1d2e" stroke-width="5"/>
+                        <line x1="70" y1="238" x2="70" y2="252" stroke="#1a1d2e" stroke-width="5"/>
+                        <line x1="115" y1="238" x2="115" y2="252" stroke="#1a1d2e" stroke-width="5"/>
+                        <line x1="160" y1="238" x2="160" y2="252" stroke="#1a1d2e" stroke-width="5"/>
+                        <line x1="205" y1="238" x2="205" y2="252" stroke="#1a1d2e" stroke-width="5"/>
+                        <line x1="250" y1="238" x2="250" y2="252" stroke="#1a1d2e" stroke-width="5"/>
+                        <line x1="295" y1="238" x2="295" y2="252" stroke="#1a1d2e" stroke-width="5"/>
+                        <line x1="335" y1="238" x2="335" y2="252" stroke="#1a1d2e" stroke-width="5"/>
+
+                        <!-- RUNNING BOARD / CHASSIS -->
+                        <rect x="60" y="193" width="262" height="11" rx="2" fill="#0e1020" stroke="#22263a" stroke-width="1.5"/>
+
+                        <!-- COWCATCHER (front left) -->
+                        <polygon points="62,196 14,234 62,234" fill="#111320" stroke="url(#hl-cyan)" stroke-width="1.5"/>
+                        <line x1="62" y1="200" x2="22" y2="230" stroke="#00ffe0" stroke-width="1" opacity="0.55"/>
+                        <line x1="62" y1="208" x2="31" y2="231" stroke="#00ffe0" stroke-width="1" opacity="0.38"/>
+                        <line x1="62" y1="217" x2="42" y2="232" stroke="#00ffe0" stroke-width="1" opacity="0.22"/>
+                        <line x1="62" y1="226" x2="53" y2="233" stroke="#00ffe0" stroke-width="0.8" opacity="0.12"/>
+                        <!-- Front buffer beam -->
+                        <rect x="56" y="207" width="8" height="22" rx="1" fill="#181a28" stroke="#363b58" stroke-width="1"/>
+
+                        <!-- BOILER MAIN BODY -->
+                        <rect x="79" y="132" width="186" height="62" rx="10" fill="url(#hl-metal)" stroke="#38405a" stroke-width="2"/>
+                        <!-- Boiler top shine -->
+                        <rect x="79" y="132" width="186" height="16" rx="10" fill="#1d2340" opacity="0.65"/>
+                        <!-- Boiler band rings -->
+                        <line x1="128" y1="132" x2="128" y2="194" stroke="#22263a" stroke-width="2.5"/>
+                        <line x1="168" y1="132" x2="168" y2="194" stroke="#22263a" stroke-width="2.5"/>
+                        <line x1="208" y1="132" x2="208" y2="194" stroke="#22263a" stroke-width="2.5"/>
+                        <!-- Boiler neon underline -->
+                        <line x1="79" y1="192" x2="265" y2="192" stroke="url(#hl-cyan)" stroke-width="2" filter="url(#hl-glow-soft)"/>
+
+                        <!-- STEAM PIPE running to chimney -->
+                        <path d="M 108 132 L 108 116 L 97 116 L 97 80" stroke="#1e2235" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+                        <path d="M 108 132 L 108 116 L 97 116 L 97 80" stroke="#36405a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+                        <!-- CHIMNEY / SMOKESTACK -->
+                        <rect x="84" y="80" width="26" height="52" rx="4" fill="#0e1020" stroke="#38405a" stroke-width="2"/>
+                        <!-- Chimney cap flare -->
+                        <rect x="76" y="71" width="42" height="13" rx="4" fill="#0e1020" stroke="url(#hl-cyan)" stroke-width="1.8" filter="url(#hl-glow-soft)"/>
+                        <!-- Dark chimney opening -->
+                        <ellipse cx="97" cy="71" rx="16" ry="5" fill="#050710"/>
+                        <!-- Chimney neon accent ring -->
+                        <line x1="84" y1="108" x2="110" y2="108" stroke="#00ffe0" stroke-width="1.2" opacity="0.45"/>
+
+                        <!-- BELL -->
+                        <rect x="143" y="118" width="12" height="15" rx="3" fill="#0e1020" stroke="#363b58" stroke-width="1.5"/>
+                        <ellipse cx="149" cy="118" rx="6" ry="2.8" fill="#1a1c2e" stroke="#00ffe0" stroke-width="1.2"/>
+                        <ellipse cx="149" cy="133" rx="11" ry="4" fill="#0a0c18" stroke="#22263a" stroke-width="1"/>
+
+                        <!-- STEAM DOME -->
+                        <rect x="182" y="110" width="30" height="24" rx="6" fill="#0e1020" stroke="#38405a" stroke-width="1.8"/>
+                        <ellipse cx="197" cy="110" rx="15" ry="5.5" fill="#181a28" stroke="url(#hl-cyan)" stroke-width="1.5" filter="url(#hl-glow-soft)"/>
+                        <ellipse cx="197" cy="132" rx="21" ry="6" fill="#090b14" stroke="#1e2235" stroke-width="1"/>
+
+                        <!-- HEADLIGHT -->
+                        <circle cx="80" cy="163" r="10" fill="#d4b840" filter="url(#hl-headlight-glow)"/>
+                        <circle cx="80" cy="163" r="7" fill="#fff5a0"/>
+                        <!-- Light beam -->
+                        <polygon points="73,158 4,130 4,197" fill="url(#hl-cyan)" opacity="0.07"/>
+
+                        <!-- PISTON CYLINDER -->
+                        <rect x="59" y="177" width="32" height="16" rx="3" fill="#0e1020" stroke="#363b58" stroke-width="1.5"/>
+                        <line x1="59" y1="185" x2="78" y2="185" stroke="#00ffe0" stroke-width="1" opacity="0.3"/>
+                        <!-- Piston rod to wheel crank -->
+                        <line x1="88" y1="183" x2="152" y2="170" stroke="#c8d0e8" stroke-width="3.5" stroke-linecap="round" class="hl-piston-rod"/>
+                        <rect x="83" y="178" width="14" height="10" rx="2" fill="#181a28" stroke="#505870" stroke-width="1.5"/>
+
+                        <!-- COUPLING ROD (connecting big wheels) -->
+                        <rect x="148" y="197" width="96" height="8" rx="4" fill="#b8c0d8" stroke="#8090b0" stroke-width="1"/>
+
+                        <!-- SMALL FRONT WHEEL -->
+                        <g class="hl-wheel hl-wsm1">
+                            <circle cx="70" cy="220" r="18" fill="#0a0c16" stroke="url(#hl-cyan)" stroke-width="2" filter="url(#hl-glow-soft)"/>
+                            <circle cx="70" cy="220" r="7" fill="#161828"/>
+                            <line x1="70" y1="202" x2="70" y2="238" stroke="#2a3048" stroke-width="1.8"/>
+                            <line x1="52" y1="220" x2="88" y2="220" stroke="#2a3048" stroke-width="1.8"/>
+                            <line x1="57" y1="207" x2="83" y2="233" stroke="#2a3048" stroke-width="1.2"/>
+                            <line x1="57" y1="233" x2="83" y2="207" stroke="#2a3048" stroke-width="1.2"/>
+                        </g>
+
+                        <!-- BIG DRIVING WHEEL 1 -->
+                        <g class="hl-wheel hl-wlg1">
+                            <circle cx="152" cy="200" r="38" fill="#080a12" stroke="url(#hl-cyan)" stroke-width="3" filter="url(#hl-glow-soft)"/>
+                            <circle cx="152" cy="200" r="15" fill="#141628"/>
+                            <circle cx="152" cy="200" r="6" fill="#252a3e"/>
+                            <!-- 8 spokes -->
+                            <line x1="152" y1="162" x2="152" y2="238" stroke="#252a3e" stroke-width="2.2"/>
+                            <line x1="114" y1="200" x2="190" y2="200" stroke="#252a3e" stroke-width="2.2"/>
+                            <line x1="125" y1="173" x2="179" y2="227" stroke="#252a3e" stroke-width="1.8"/>
+                            <line x1="125" y1="227" x2="179" y2="173" stroke="#252a3e" stroke-width="1.8"/>
+                            <line x1="138" y1="165" x2="166" y2="235" stroke="#252a3e" stroke-width="1.2"/>
+                            <line x1="138" y1="235" x2="166" y2="165" stroke="#252a3e" stroke-width="1.2"/>
+                            <line x1="117" y1="186" x2="187" y2="214" stroke="#252a3e" stroke-width="1.2"/>
+                            <line x1="117" y1="214" x2="187" y2="186" stroke="#252a3e" stroke-width="1.2"/>
+                            <!-- Crank pin (orange dot where connecting rod attaches) -->
+                            <circle cx="152" cy="166" r="5.5" fill="#ff7b00" opacity="0.9"/>
+                            <circle cx="152" cy="166" r="3" fill="#ffb040"/>
+                        </g>
+
+                        <!-- BIG DRIVING WHEEL 2 -->
+                        <g class="hl-wheel hl-wlg2">
+                            <circle cx="240" cy="200" r="38" fill="#080a12" stroke="url(#hl-cyan)" stroke-width="3" filter="url(#hl-glow-soft)"/>
+                            <circle cx="240" cy="200" r="15" fill="#141628"/>
+                            <circle cx="240" cy="200" r="6" fill="#252a3e"/>
+                            <!-- 8 spokes -->
+                            <line x1="240" y1="162" x2="240" y2="238" stroke="#252a3e" stroke-width="2.2"/>
+                            <line x1="202" y1="200" x2="278" y2="200" stroke="#252a3e" stroke-width="2.2"/>
+                            <line x1="213" y1="173" x2="267" y2="227" stroke="#252a3e" stroke-width="1.8"/>
+                            <line x1="213" y1="227" x2="267" y2="173" stroke="#252a3e" stroke-width="1.8"/>
+                            <line x1="226" y1="165" x2="254" y2="235" stroke="#252a3e" stroke-width="1.2"/>
+                            <line x1="226" y1="235" x2="254" y2="165" stroke="#252a3e" stroke-width="1.2"/>
+                            <line x1="205" y1="186" x2="275" y2="214" stroke="#252a3e" stroke-width="1.2"/>
+                            <line x1="205" y1="214" x2="275" y2="186" stroke="#252a3e" stroke-width="1.2"/>
+                            <!-- Crank pin -->
+                            <circle cx="240" cy="166" r="5.5" fill="#ff7b00" opacity="0.9"/>
+                            <circle cx="240" cy="166" r="3" fill="#ffb040"/>
+                        </g>
+
+                        <!-- SMALL REAR WHEEL (under cab) -->
+                        <g class="hl-wheel hl-wsm2">
+                            <circle cx="310" cy="222" r="16" fill="#0a0c16" stroke="url(#hl-cyan)" stroke-width="2" filter="url(#hl-glow-soft)"/>
+                            <circle cx="310" cy="222" r="6" fill="#161828"/>
+                            <line x1="310" y1="206" x2="310" y2="238" stroke="#2a3048" stroke-width="1.8"/>
+                            <line x1="294" y1="222" x2="326" y2="222" stroke="#2a3048" stroke-width="1.8"/>
+                            <line x1="299" y1="211" x2="321" y2="233" stroke="#2a3048" stroke-width="1.2"/>
+                            <line x1="299" y1="233" x2="321" y2="211" stroke="#2a3048" stroke-width="1.2"/>
+                        </g>
+
+                        <!-- CAB / DRIVER CABIN -->
+                        <!-- Cab body -->
+                        <rect x="263" y="110" width="78" height="84" rx="6" fill="url(#hl-cab-grad)" stroke="#ff7b00" stroke-width="2"/>
+                        <!-- Cab roof (wider overhang) -->
+                        <rect x="257" y="101" width="90" height="14" rx="5" fill="#141424" stroke="#ff7b00" stroke-width="1.8"/>
+                        <!-- Front window -->
+                        <rect x="272" y="124" width="30" height="36" rx="5" fill="#030610" stroke="#00ffe0" stroke-width="1.8" filter="url(#hl-glow-soft)"/>
+                        <rect x="274" y="126" width="26" height="32" rx="4" fill="#001830" opacity="0.95"/>
+                        <!-- Window reflection -->
+                        <line x1="282" y1="126" x2="282" y2="158" stroke="#00ffe0" stroke-width="0.6" opacity="0.28"/>
+                        <line x1="290" y1="126" x2="288" y2="158" stroke="#00ffe0" stroke-width="0.4" opacity="0.15"/>
+                        <!-- Side window -->
+                        <rect x="311" y="124" width="20" height="26" rx="4" fill="#030610" stroke="#00ffe0" stroke-width="1.2" filter="url(#hl-glow-soft)"/>
+                        <rect x="313" y="126" width="16" height="22" rx="3" fill="#001828" opacity="0.95"/>
+                        <!-- Cab text labels -->
+                        <text x="287" y="143" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#00ffe0" opacity="0.92" font-weight="bold" letter-spacing="1">YAR</text>
+                        <text x="287" y="153" text-anchor="middle" font-family="monospace" font-size="6" fill="#ff7b00" opacity="0.88" letter-spacing="0.5">v3.5</text>
+                        <!-- Cab rear wall detail -->
+                        <rect x="333" y="110" width="8" height="84" rx="2" fill="#0a0c18" stroke="#1a1c30" stroke-width="1"/>
+                        <!-- Safety valve on cab roof -->
+                        <rect x="285" y="93" width="6" height="10" rx="1" fill="#363b58" stroke="#505870" stroke-width="1"/>
+                        <rect x="283" y="90" width="10" height="5" rx="1" fill="#1a1c2e" stroke="#505870" stroke-width="1"/>
+
+                        <!-- NEON GLOW UNDERFRAME STRIP -->
+                        <line x1="60" y1="202" x2="335" y2="202" stroke="url(#hl-cyan)" stroke-width="1.5" opacity="0.4" filter="url(#hl-glow-soft)"/>
+
+                        <!-- Rivets on boiler (decorative) -->
+                        <circle cx="100" cy="140" r="2" fill="#252a3e"/>
+                        <circle cx="100" cy="155" r="2" fill="#252a3e"/>
+                        <circle cx="100" cy="170" r="2" fill="#252a3e"/>
+                        <circle cx="100" cy="185" r="2" fill="#252a3e"/>
+                        <circle cx="255" cy="140" r="2" fill="#252a3e"/>
+                        <circle cx="255" cy="155" r="2" fill="#252a3e"/>
+                        <circle cx="255" cy="170" r="2" fill="#252a3e"/>
+                        <circle cx="255" cy="185" r="2" fill="#252a3e"/>
+
+                        <!-- Number plate on boiler front -->
+                        <rect x="82" y="148" width="24" height="14" rx="2" fill="#0a0c18" stroke="#ff7b00" stroke-width="1.2"/>
+                        <text x="94" y="158" text-anchor="middle" font-family="monospace" font-size="5.5" fill="#ff7b00" font-weight="bold">01</text>
+                    </svg>
+                </div>
+                <div class="hero-stats grid-2 font-mono">
+                    <div class="stat-box glass">
+                        <span class="stat-label">КОД ДОСТУПА</span>
+                        <span class="stat-value text-gradient-orange">YEARS.03_05</span>
+                    </div>
+                    <div class="stat-box glass">
+                        <span class="stat-label">ГЛАВНАЯ СТРАСТЬ</span>
+                        <span class="stat-value text-gradient-cyan">LOCOMOTIVES</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-down-hint">
+            <span class="font-mono">SCROLL_DOWN</span>
+            <div class="chevron-animated"></div>
+        </div>
+    </header>
+
+    <!-- BENTO GALLERY (all 11 cards) -->
+    <main id="bento" class="bento-section">
+        <div class="container container-bento">
+            <div class="section-header">
+                <span class="section-tag font-mono">// BIO_TELEMETRY</span>
+                <h2 class="section-title font-display">ИНТЕРАКТИВНЫЕ <span class="text-orange">СЮЖЕТЫ</span></h2>
+                <p class="section-desc">Наведите курсор на любую карточку — оригинальный кадр плавно превратится в яркий
+                    аниме-арт.</p>
+            </div>
+
+            <div class="bento-grid">
+
+                <!-- Card 1: King (anime ready) -->
+                <div class="bento-item glass item-large tilt-card hover-glow" data-card-id="king">
+                    <div class="card-visual">
+                        <img src="assets/photo_king.jpg" alt="Ярослав Король" class="card-image base-img">
+                        <img src="assets/photo_king_anime.png" alt="Аниме Король" class="card-image anime-img">
+                        <div class="interactive-grid-mesh"></div>
+                        <div class="card-badge font-mono badge-gold">THE LITTLE KING</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title font-display">Его Величество Ярослав</h3>
+                        <p class="card-text">В королевской красной мантии с золотой короной, Ярослав правит страной игр
+                            и воображаемых приключений!</p>
+                        <div class="card-meta font-mono">ACCESS_RESTRICTED // ROYAL_DOMINANCE</div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Train (anime ready) -->
+                <div class="bento-item glass item-medium tilt-card hover-glow" data-card-id="train">
+                    <div class="card-visual">
+                        <img src="assets/photo_train.jpg" alt="Ярослав Поезда" class="card-image base-img">
+                        <img src="assets/photo_train_anime.png" alt="Аниме Поезда" class="card-image anime-img">
+                        <div class="interactive-grid-mesh"></div>
+                        <div class="card-badge font-mono badge-cyan">RAILROAD_ENG</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title font-display">Мастер Железных Дорог</h3>
+                        <p class="card-text">Ярослав на рельсах рядом с огромным локомотивом — его любовь к поездам это
+                            настоящая страсть!</p>
+                        <div class="card-meta font-mono">SYS_PASSION // HIGH_SPEED_TRAINS</div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Bath (anime generated!) -->
+                <div class="bento-item glass item-small tilt-card hover-glow" data-card-id="bath">
+                    <div class="card-visual">
+                        <img src="assets/photo_bath.jpg" alt="Весёлая ванна" class="card-image base-img">
+                        <img src="assets/photo_bath_anime.png" alt="Аниме ванна" class="card-image anime-img">
+                        <div class="interactive-grid-mesh"></div>
+                        <div class="card-badge font-mono badge-pink">FOAMY_DYNAMO</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title font-display">Водопад Чистого Восторга</h3>
+                        <p class="card-text">Купание — целая наука! Ярослав заливисто смеётся прямо из пенной ванны с
+                            безумной шапкой из мыльных пузырей.</p>
+                        <div class="card-meta font-mono">STATE_ACTIVE // MAXIMUM_WETNESS</div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Play (CSS filter anime fallback) -->
+                <div class="bento-item glass item-small tilt-card hover-glow css-filter-mode" data-card-id="play">
+                    <div class="card-visual">
+                        <img src="assets/photo_play.jpg" alt="Игровая площадка" class="card-image base-img">
+                        <div class="canvas-fallback-container">
+                            <canvas class="anime-canvas-fallback"></canvas>
+                        </div>
+                        <div class="interactive-grid-mesh"></div>
+                        <div class="card-badge font-mono badge-violet">PLAY_LAGOON</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title font-display">Капитан Сухого Бассейна</h3>
+                        <p class="card-text">Расслабился на супергеройском пуфике в детском центре, гордо указывает на
+                            свои владения с разноцветным бассейном.</p>
+                        <div class="card-meta font-mono">TERRITORY_SECURED // GAME_MODE_ON</div>
+                    </div>
+                </div>
+
+                <!-- Card 5: Potty (anime generated!) -->
+                <div class="bento-item glass item-small tilt-card hover-glow" data-card-id="potty">
+                    <div class="card-visual">
+                        <img src="assets/photo_potty.jpg" alt="Философ" class="card-image base-img">
+                        <img src="assets/photo_potty_anime.png" alt="Аниме философ" class="card-image anime-img">
+                        <div class="interactive-grid-mesh"></div>
+                        <div class="card-badge font-mono badge-orange">THE_THINKER</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title font-display">Философия Утра</h3>
+                        <p class="card-text">В стильных горчичных гольфах восседает на троне-горшке, устремив задумчивый
+                            взгляд к небу. Здесь рождаются великие идеи!</p>
+                        <div class="card-meta font-mono">SYSTEM_IDLE // DEEP_THINKING</div>
+                    </div>
+                </div>
+
+                <!-- Card 6: Haircut (anime generated!) -->
+                <div class="bento-item glass item-medium tilt-card hover-glow" data-card-id="haircut">
+                    <div class="card-visual">
+                        <img src="assets/photo_haircut.jpg" alt="Стрижка" class="card-image base-img">
+                        <img src="assets/photo_haircut_anime.png" alt="Аниме стрижка" class="card-image anime-img">
+                        <div class="interactive-grid-mesh"></div>
+                        <div class="card-badge font-mono badge-green">SALON_SHIELD</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title font-display">Новый Стиль</h3>
+                        <p class="card-text">Настоящий джентльмен следит за стилем с детства! В кресле барбера под
+                            ярко-зелёным пеньюаром, готовится к новой причёске.</p>
+                        <div class="card-meta font-mono">UPGRADE_INTEGRITY // HAIR_UPGRADE_100</div>
+                    </div>
+                </div>
+
+                <!-- Card 7: Best Kicker Portrait (anime generated!) -->
+                <div class="bento-item glass item-medium tilt-card hover-glow" data-card-id="new1">
+                    <div class="card-visual">
+                        <img src="assets/Новые (1).jpg" alt="Лучший Кикер" class="card-image base-img">
+                        <img src="assets/photo_new1_anime.png" alt="Аниме кикер" class="card-image anime-img">
+                        <div class="interactive-grid-mesh"></div>
+                        <div class="card-badge font-mono badge-cyan">BEST_KICKER_12</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title font-display">Лучший Кикер №12</h3>
+                        <p class="card-text">В спортивном свежем джерси BEST KICKER #12 с руками в карманах, смотрит
+                            прямо в камеру — коллекция спортивного стиля от Ярослава!</p>
+                        <div class="card-meta font-mono">STYLE_MODE // ATHLETIC_PRIME</div>
+                    </div>
+                </div>
+
+                <!-- Card 8: Tough Pose (anime generated!) -->
+                <div class="bento-item glass item-small tilt-card hover-glow" data-card-id="new2">
+                    <div class="card-visual">
+                        <img src="assets/Новые (2).jpg" alt="Боевая стойка" class="card-image base-img">
+                        <img src="assets/photo_new2_anime.png" alt="Аниме стойка" class="card-image anime-img">
+                        <div class="interactive-grid-mesh"></div>
+                        <div class="card-badge font-mono badge-red">BATTLE_STANCE</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title font-display">Боевая Стойка</h3>
+                        <p class="card-text">Рука на бедре, кулак сжат — в лучах золотого заката Ярослав демонстрирует
+                            свою крутую сторону!</p>
+                        <div class="card-meta font-mono">COMBAT_READY // POWER_STANCE</div>
+                    </div>
+                </div>
+
+                <!-- Card 9: Travel Beanie -->
+                <div class="bento-item glass item-small tilt-card hover-glow" data-card-id="new3">
+                    <div class="card-visual">
+                        <img src="assets/Новые (3).jpg" alt="Путешественник" class="card-image base-img">
+                        <img src="assets/Новые (3)_anime.jpg" alt="Аниме путешественник" class="card-image anime-img">
+                        <div class="interactive-grid-mesh"></div>
+                        <div class="card-badge font-mono badge-violet">EXPLORER_MODE</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title font-display">Маленький Исследователь</h3>
+                        <p class="card-text">В уютной серой шапке-бини и кремовом свитере, стоит в деревянном домике —
+                            готов к новым путешествиям!</p>
+                        <div class="card-meta font-mono">EXPEDITION_LOG // TRAVEL_READY</div>
+                    </div>
+                </div>
+
+                <!-- Card 10: Full Body Kicker -->
+                <div class="bento-item glass item-small tilt-card hover-glow" data-card-id="new4">
+                    <div class="card-visual">
+                        <img src="assets/Новые (4).jpg" alt="Спортсмен" class="card-image base-img">
+                        <img src="assets/Новые (4)_anime.jpg" alt="Аниме спортсмен" class="card-image anime-img">
+                        <div class="interactive-grid-mesh"></div>
+                        <div class="card-badge font-mono badge-pink">SPORT_FULL</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title font-display">Звёздный Спортсмен</h3>
+                        <p class="card-text">В полном росте в джерси и кроссовках New Balance — вылитый профессиональный
+                            игрок на фоне закатного света.</p>
+                        <div class="card-meta font-mono">ATHLETE_CLASS // FULL_HEIGHT_SCAN</div>
+                    </div>
+                </div>
+
+                <!-- Card 11: Another Kicker -->
+                <div class="bento-item glass item-large tilt-card hover-glow" data-card-id="new5">
+                    <div class="card-visual">
+                        <img src="assets/Новые (5).jpg" alt="Чемпион" class="card-image base-img">
+                        <img src="assets/Новые (5)_anime.jpg" alt="Аниме чемпион" class="card-image anime-img">
+                        <div class="interactive-grid-mesh"></div>
+                        <div class="card-badge font-mono badge-gold">CHAMPION_MODE</div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title font-display">Юный Чемпион</h3>
+                        <p class="card-text">Спокойный, уверенный в себе взгляд и руки в карманах — это Ярослав в своём
+                            лучшем стиле, победитель по жизни!</p>
+                        <div class="card-meta font-mono">CHAMPION_STANCE // GOLDEN_HOUR</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- STEAM TRAIN DEPOT -->
+    <section id="trains" class="trains-section">
+        <div class="container">
+            <div class="section-header align-center">
+                <span class="section-tag font-mono">// STEAM_LOCOMOTIVE_SYSTEM</span>
+                <h2 class="section-title font-display">СТАНЦИЯ <span class="text-gradient-cyan">«ПОЕЗДА»</span></h2>
+                <p class="section-desc max-w">Ярослав без ума от локомотивов. Он обожает задорные звуки колёсных пар,
+                    мощный рёв гудков и знает, как работают настоящие паровые машины.</p>
+            </div>
+
+            <div class="trains-deck">
+                <div class="train-main-display glass">
+                    <div class="train-view-hud">
+                        <div class="train-telemetry font-mono">
+                            <span>DEPOT: SECTOR_7A</span>
+                            <span>ENGINE_TEMP: OPTIMAL</span>
+                            <span>BOILER_PRESSURE: 16.5 BAR</span>
+                        </div>
+                        <div class="train-svg-stage">
+                            <svg class="locomotive-illustration" viewBox="0 0 800 300">
+                                <defs>
+                                    <linearGradient id="train-metal" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#2a2e3d" />
+                                        <stop offset="50%" stop-color="#181a24" />
+                                        <stop offset="100%" stop-color="#0b0c10" />
+                                    </linearGradient>
+                                    <linearGradient id="neon-cyan" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stop-color="#00ffe0" />
+                                        <stop offset="100%" stop-color="#0072ff" />
+                                    </linearGradient>
+                                    <filter id="vector-glow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feGaussianBlur stdDeviation="8" result="blur" />
+                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                    </filter>
+                                </defs>
+
+                                <line x1="50" y1="260" x2="750" y2="260" stroke="#121520" stroke-width="8"></line>
+                                <line x1="50" y1="260" x2="750" y2="260" stroke="url(#neon-cyan)" stroke-width="2"
+                                    filter="url(#vector-glow)"></line>
+
+                                <g class="sleepers">
+                                    <line x1="80" y1="260" x2="80" y2="275" stroke="#2c3040" stroke-width="6"></line>
+                                    <line x1="160" y1="260" x2="160" y2="275" stroke="#2c3040" stroke-width="6"></line>
+                                    <line x1="240" y1="260" x2="240" y2="275" stroke="#2c3040" stroke-width="6"></line>
+                                    <line x1="320" y1="260" x2="320" y2="275" stroke="#2c3040" stroke-width="6"></line>
+                                    <line x1="400" y1="260" x2="400" y2="275" stroke="#2c3040" stroke-width="6"></line>
+                                    <line x1="480" y1="260" x2="480" y2="275" stroke="#2c3040" stroke-width="6"></line>
+                                    <line x1="560" y1="260" x2="560" y2="275" stroke="#2c3040" stroke-width="6"></line>
+                                    <line x1="640" y1="260" x2="640" y2="275" stroke="#2c3040" stroke-width="6"></line>
+                                    <line x1="720" y1="260" x2="720" y2="275" stroke="#2c3040" stroke-width="6"></line>
+                                </g>
+
+                                <g class="steam-clouds" id="steam-clouds">
+                                    <circle cx="210" cy="80" r="15" fill="#ffffff" opacity="0.15"
+                                        class="steam-puff puff-1"></circle>
+                                    <circle cx="170" cy="65" r="22" fill="#ffffff" opacity="0.1"
+                                        class="steam-puff puff-2"></circle>
+                                    <circle cx="110" cy="50" r="30" fill="#ffffff" opacity="0.05"
+                                        class="steam-puff puff-3"></circle>
+                                </g>
+
+                                <rect x="250" y="110" width="380" height="110" rx="10" fill="url(#train-metal)"
+                                    stroke="#3e455d" stroke-width="2"></rect>
+                                <polygon points="630,70 700,70 700,220 630,220" fill="url(#train-metal)"
+                                    stroke="#3e455d" stroke-width="2"></polygon>
+                                <rect x="645" y="90" width="40" height="50" rx="5" fill="#080c10" stroke="#00ffe0"
+                                    stroke-width="1.5" filter="url(#vector-glow)"></rect>
+                                <circle cx="665" cy="115" r="10" fill="#e2c560" class="cab-light"></circle>
+
+                                <rect x="290" y="60" width="35" height="55" fill="#1b1c24" stroke="#3e455d"
+                                    stroke-width="2"></rect>
+                                <rect x="280" y="50" width="55" height="10" fill="url(#neon-cyan)"></rect>
+
+                                <polygon points="250,150 200,140 200,180 250,170" fill="url(#train-metal)"></polygon>
+                                <circle cx="205" cy="160" r="10" fill="#ffffff" stroke="#ffff00" stroke-width="2"
+                                    class="headlight-eye" filter="url(#vector-glow)"></circle>
+                                <polygon points="200,160 50,110 50,210" fill="url(#neon-cyan)" opacity="0.15"
+                                    class="light-beam"></polygon>
+
+                                <g class="wheels">
+                                    <g class="wheel spin-fast" style="--rotation-center: 240px 235px;">
+                                        <circle cx="240" cy="235" r="23" fill="#1b1e28" stroke="url(#neon-cyan)"
+                                            stroke-width="3" filter="url(#vector-glow)"></circle>
+                                        <line x1="240" y1="212" x2="240" y2="258" stroke="#ffffff" stroke-width="2">
+                                        </line>
+                                        <line x1="217" y1="235" x2="263" y2="235" stroke="#ffffff" stroke-width="2">
+                                        </line>
+                                    </g>
+                                    <g class="wheel spin-slow w-1" style="--rotation-center: 380px 210px;">
+                                        <circle cx="380" cy="210" r="48" fill="#12141a" stroke="url(#neon-cyan)"
+                                            stroke-width="4"></circle>
+                                        <circle cx="380" cy="210" r="12" fill="#2d3244"></circle>
+                                        <line x1="380" y1="162" x2="380" y2="258" stroke="#3c435a" stroke-width="2">
+                                        </line>
+                                        <line x1="332" y1="210" x2="428" y2="210" stroke="#3c435a" stroke-width="2">
+                                        </line>
+                                        <line x1="346" y1="176" x2="414" y2="244" stroke="#3c435a" stroke-width="1.5">
+                                        </line>
+                                        <line x1="346" y1="244" x2="414" y2="176" stroke="#3c435a" stroke-width="1.5">
+                                        </line>
+                                    </g>
+                                    <g class="wheel spin-slow w-2" style="--rotation-center: 490px 210px;">
+                                        <circle cx="490" cy="210" r="48" fill="#12141a" stroke="url(#neon-cyan)"
+                                            stroke-width="4"></circle>
+                                        <circle cx="490" cy="210" r="12" fill="#2d3244"></circle>
+                                        <line x1="490" y1="162" x2="490" y2="258" stroke="#3c435a" stroke-width="2">
+                                        </line>
+                                        <line x1="442" y1="210" x2="538" y2="210" stroke="#3c435a" stroke-width="2">
+                                        </line>
+                                        <line x1="456" y1="176" x2="524" y2="244" stroke="#3c435a" stroke-width="1.5">
+                                        </line>
+                                        <line x1="456" y1="244" x2="524" y2="176" stroke="#3c435a" stroke-width="1.5">
+                                        </line>
+                                    </g>
+                                    <g class="wheel spin-slow w-3" style="--rotation-center: 600px 210px;">
+                                        <circle cx="600" cy="210" r="48" fill="#12141a" stroke="url(#neon-cyan)"
+                                            stroke-width="4"></circle>
+                                        <circle cx="600" cy="210" r="12" fill="#2d3244"></circle>
+                                        <line x1="600" y1="162" x2="600" y2="258" stroke="#3c435a" stroke-width="2">
+                                        </line>
+                                        <line x1="552" y1="210" x2="648" y2="210" stroke="#3c435a" stroke-width="2">
+                                        </line>
+                                        <line x1="566" y1="176" x2="634" y2="244" stroke="#3c435a" stroke-width="1.5">
+                                        </line>
+                                        <line x1="566" y1="244" x2="634" y2="176" stroke="#3c435a" stroke-width="1.5">
+                                        </line>
+                                    </g>
+                                    <g class="piston-rod" id="piston-rod">
+                                        <line x1="380" y1="225" x2="600" y2="225" stroke="#ffffff" stroke-width="6"
+                                            stroke-linecap="round"></line>
+                                        <line x1="385" y1="225" x2="300" y2="175" stroke="#e0e0e0" stroke-width="4"
+                                            stroke-linecap="round"></line>
+                                        <rect x="290" y="165" width="20" height="20" rx="3" fill="#222" stroke="#666"
+                                            stroke-width="2"></rect>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="train-control-hud">
+                        <div class="hud-gauge font-mono">
+                            <span class="gauge-lbl">ТЯГА ПОЕЗДА (SPEED)</span>
+                            <div class="gaugebar">
+                                <div class="gauge-fill" id="train-throttle" style="width: 75%;"></div>
+                            </div>
+                            <span class="gauge-val" id="throttle-txt">75% // FAST_LAP</span>
+                        </div>
+                        <div class="hud-actions">
+                            <button id="btn-train-sound" class="cyber-outline-btn">
+                                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                </svg>
+                                ПОДАТЬ ГУДОК
+                            </button>
+                            <button id="btn-train-accelerate" class="cyber-filled-btn">УСКОРИТЬ МАШИНУ</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trains-stats-grid grid-3 font-mono">
+                    <div class="stat-tile glass select-train active" data-train-type="bullet">
+                        <span class="tile-num">01</span>
+                        <h4 class="tile-title">Сапсан Express</h4>
+                        <p class="tile-info">Сверхскоростной поезд будущего. Управляется Ярославом с суперскоростью.</p>
+                        <div class="tile-tag cyan-tag">300 km/h</div>
+                    </div>
+                    <div class="stat-tile glass select-train" data-train-type="steam">
+                        <span class="tile-num">02</span>
+                        <h4 class="tile-title">Паровоз Черепанова</h4>
+                        <p class="tile-info">Настоящая огненная паровая классика. Ярослав обожает чугунные колёса.</p>
+                        <div class="tile-tag red-tag">VINTAGE</div>
+                    </div>
+                    <div class="stat-tile glass select-train" data-train-type="freight">
+                        <span class="tile-num">03</span>
+                        <h4 class="tile-title">Товарный Состав</h4>
+                        <p class="tile-info">Огромные вагоны, полные цветных кубиков и игрушек. Главная логистика!</p>
+                        <div class="tile-tag orange-tag">HEAVY_LOAD</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRAVEL CODEX -->
+    <section id="travel" class="travel-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag font-mono">// EXTRATERRESTRIAL_EXPEDITIONS</span>
+                <h2 class="section-title font-display">КАРТА <span class="text-neon-cyan">ПУТЕШЕСТВИЙ</span></h2>
+                <p class="section-desc">В свои 3.5 года Ярослав уже заядлый путешественник. Каждая поездка — новые
+                    вокзалы, полёты на красивых самолётах и заезды по новым рельсам.</p>
+            </div>
+
+            <div class="travel-interface glass">
+                <div class="travel-telemetry-strip font-mono">
+                    <span>GPS: LOCK // PASSENGER: YAROSLAV</span>
+                    <span>TOTAL_DIST: 9410KM</span>
+                    <span>AIR_LANDINGS: 14</span>
+                </div>
+
+                <div class="travel-timeline">
+                    <div class="timeline-step glass-card">
+                        <div class="step-marker font-mono">
+                            <div class="dot-radar"></div>01
+                        </div>
+                        <div class="step-content">
+                            <span class="step-tag bg-cyan font-mono">ПОЛЁТ НА ЛАЙНЕРЕ</span>
+                            <h3 class="step-title font-display">Первые полёты в облаках</h3>
+                            <p class="step-text">Покорение небесных просторов! Огромные воздушные лайнеры, апельсиновый
+                                сок на борту и белые облака прямо за иллюминатором.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-step glass-card">
+                        <div class="step-marker font-mono">
+                            <div class="dot-radar"></div>02
+                        </div>
+                        <div class="step-content">
+                            <span class="step-tag bg-orange font-mono">ЖЕЛЕЗНОДОРОЖНЫЙ ТУР</span>
+                            <h3 class="step-title font-display">Стук колёс под чай</h3>
+                            <p class="step-text">Настоящая экспедиция на дальнем поезде! В купе с мамой и папой, длинные
+                                перроны и невероятные виды за широким окном.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-step glass-card">
+                        <div class="step-marker font-mono">
+                            <div class="dot-radar"></div>03
+                        </div>
+                        <div class="step-content">
+                            <span class="step-tag bg-pink font-mono">ЭКСПЕДИЦИЯ МОРЕ</span>
+                            <h3 class="step-title font-display">Морские песчаные берега</h3>
+                            <p class="step-text">Солнечные побережья, шуршащие ракушки и тёплые волны. Строительство
+                                замков из мокрого золотого песка вместе с папой!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEDIA DECK VIDEO PLAYER -->
+    <section id="media-deck" class="media-deck-section">
+        <div class="container container-media">
+            <div class="section-header align-center">
+                <span class="section-tag font-mono">// HOVER_TELEMETRY_ARCHIVE</span>
+                <h2 class="section-title font-display">МЕДИА <span class="text-orange">ДЕКА</span></h2>
+                <p class="section-desc max-w">Эксклюзивный архивный видеоматериал из жизни Ярослава.</p>
+            </div>
+
+            <div class="cyber-media-deck glass">
+                <div class="deck-header font-mono">
+                    <span class="deck-title">FEED // SRC: VIDEO_YAROSLAV.MP4</span>
+                    <span class="deck-status blink-light">PLAYBACK_STANDBY</span>
+                </div>
+
+                <div class="deck-body">
+                    <div class="video-container-relative" id="video-wrapper">
+                        <!-- video: object-position set to top to show child face -->
+                        <video id="cyber-video" class="cyber-video" playsinline preload="metadata"
+                            style="object-position: center 15%; object-fit: cover;">
+                            <source src="assets/video_yaroslav.mp4" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+
+                        <div class="video-controls-overlay-hud active" id="video-hud">
+                            <div class="hud-central-trigger">
+                                <div class="trigger-ring"></div>
+                                <button id="btn-central-play" class="trigger-btn" aria-label="Play video">
+                                    <svg class="trigger-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="telemetry-border tb-tl"></div>
+                        <div class="telemetry-border tb-tr"></div>
+                        <div class="telemetry-border tb-bl"></div>
+                        <div class="telemetry-border tb-br"></div>
+
+                        <canvas id="canvas-sound-visualizer" class="video-sound-overlay"></canvas>
+                    </div>
+                </div>
+
+                <div class="deck-footer">
+                    <div class="seeker-bar-deck">
+                        <span class="font-mono current-time" id="val-curr-time">0:00</span>
+                        <div class="seeker-timeline" id="control-timeline">
+                            <div class="timeline-sliderbar">
+                                <div class="timeline-slider-fill" id="timeline-progress"></div>
+                                <div class="timeline-slider-handle" id="timeline-handle"></div>
+                            </div>
+                        </div>
+                        <span class="font-mono total-time" id="val-total-time">0:00</span>
+                    </div>
+
+                    <div class="controls-panel">
+                        <div class="panel-left">
+                            <button id="btn-video-play" class="panel-btn" aria-label="Toggle Play">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="p-play-ico" width="20" height="20">
+                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                </svg>
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="p-pause-ico hide" width="20"
+                                    height="20">
+                                    <rect x="6" y="4" width="4" height="16"></rect>
+                                    <rect x="14" y="4" width="4" height="16"></rect>
+                                </svg>
+                            </button>
+                            <button id="btn-video-stop" class="panel-btn" aria-label="Stop">
+                                <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                                    <rect x="4" y="4" width="16" height="16"></rect>
+                                </svg>
+                            </button>
+                            <div class="volume-container">
+                                <button id="btn-video-volume" class="panel-btn" aria-label="Mute">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        class="v-up" width="18" height="18">
+                                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                    </svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        class="v-mute hide" width="18" height="18">
+                                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                                    </svg>
+                                </button>
+                                <div class="volume-slider-container">
+                                    <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.8"
+                                        class="vol-slider">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-right font-mono txt-neon-cyan">
+                            <span>FPS: 30 // HD_DEEP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEXUS OF LOVE -->
+    <section id="nexus" class="nexus-section">
+        <div class="container">
+            <div class="nexus-layout glass">
+                <div class="nexus-frame text-center">
+                    <div class="nexus-heart-signal">
+                        <div class="pulse-ring pr-1"></div>
+                        <div class="pulse-ring pr-2"></div>
+                        <svg class="heart-svg" viewBox="0 0 32 32" fill="none" stroke="url(#heart-grad)"
+                            stroke-width="2">
+                            <defs>
+                                <linearGradient id="heart-grad" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#ff007f" />
+                                    <stop offset="100%" stop-color="#ff7f00" />
+                                </linearGradient>
+                            </defs>
+                            <path
+                                d="M16 28.5L4.5 17c-3-3-3-8 1-12c4-4 9.5-3 10.5 1.5c1-4.5 6.5-5.5 10.5-1.5c4 4 4 9 1 12L16 28.5z" />
+                        </svg>
+                    </div>
+
+                    <span class="section-tag font-mono">// CORE_VAL_INF_DIRECTIVE</span>
+                    <h2 class="nexus-title font-display">БЕСКОНЕЧНАЯ ЛЮБОВЬ</h2>
+                    <p class="nexus-quote font-display">«Я ОЧЕНЬ СИЛЬНО ЛЮБЛЮ <span class="light-pink">МАМУ И
+                            ПАПУ</span>!»</p>
+                    <p class="nexus-desc max-w-sm margin-auto">Для Ярослава мама и папа — это самые главные люди во всей
+                        Вселенной, его верная опора, лучшие друзья по весёлым играм и спутники во всех удивительных
+                        путешествиях.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer-terminal font-mono">
+        <div class="container container-footer">
+            <div class="footer-left">
+                <p>&copy; 2026 Yaroslav Cybernetic Workspace. Built with ❤️</p>
+                <div class="footer-sub font-mono opacity-50">STATUS: INITIALIZED // VER: 3.5.011</div>
+            </div>
+            <div class="footer-right">
+                <div class="footer-specs">
+                    <span>GRID: BENTO v2.1</span>
+                    <span>AUDIO_SYNTH: WEB_OSCILLATORS_v1.0</span>
+                    <span>STYLE_SYSTEM: NEON_LUXURY_v3.5</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
